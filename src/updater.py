@@ -11,7 +11,6 @@ import constants
 
 log = logging.getLogger(Path(__file__).name)
 
-
 class Updater(QThread):
     # Enum mit Objektzuständen
     class STATES(Enum):
