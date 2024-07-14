@@ -1,14 +1,12 @@
-from requesthandler import RequestHandler
-from http.server import ThreadingHTTPServer
-
-from PySide2.QtCore import QThread
-
 import logging
+import ssl
+from http.server import ThreadingHTTPServer
 from pathlib import Path
 
-import ssl
+from PySide6.QtCore import QThread
 
 import constants
+from requesthandler import RequestHandler
 
 log = logging.getLogger(Path(__file__).name)
 
@@ -46,8 +44,9 @@ class Server(QThread):
 
         with ThreadingHTTPServer((self.listenIP, self.listenPort), RequestHandler) as server:
             if constants.ENABLE_SSL:
-                server.socket = ssl.wrap_socket(server.socket, server_side=True, certfile=constants.CERT_PATH,
-                                                ssl_version=ssl.PROTOCOL_TLSv1_2)
+                context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+                context.load_cert_chain(certfile=constants.CERT_PATH)
+                server.socket = context.wrap_socket(server.socket, server_side=True)
             self.webserver = server
             log.info("[WEBSERVER]: Warte auf Verbindungen....")
             server.serve_forever()

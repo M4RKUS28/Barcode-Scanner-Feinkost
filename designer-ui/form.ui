@@ -40,7 +40,8 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">;
+color: rgb(0, 0, 0);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <property name="spacing">
@@ -278,6 +279,10 @@ margin: 0px}
                        <bold>true</bold>
                       </font>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                     </property>
                      <property name="text">
                       <string>Advertise_artikel_name</string>
                      </property>
@@ -347,6 +352,10 @@ margin: 0px}
                        <pointsize>15</pointsize>
                       </font>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                     </property>
                      <property name="text">
                       <string>TextLabel</string>
                      </property>
@@ -361,6 +370,10 @@ margin: 0px}
                       <font>
                        <pointsize>13</pointsize>
                       </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
                      </property>
                      <property name="text">
                       <string>inhalt_preview_1</string>
@@ -553,6 +566,10 @@ margin: 0px}</string>
                        <bold>true</bold>
                       </font>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                     </property>
                      <property name="text">
                       <string>artikel2_name</string>
                      </property>
@@ -622,6 +639,10 @@ margin: 0px}</string>
                        <pointsize>15</pointsize>
                       </font>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                     </property>
                      <property name="text">
                       <string>TextLabel</string>
                      </property>
@@ -636,6 +657,10 @@ margin: 0px}</string>
                       <font>
                        <pointsize>13</pointsize>
                       </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">;
+color: rgb(0, 0, 0);</string>
                      </property>
                      <property name="text">
                       <string>inhalt_preview_2</string>
@@ -1342,7 +1367,8 @@ margin: 0px}</string>
               <string notr="true">QWidget#widget_6 {background-color: rgb(255, 255, 255);
 border: 2px solid rgb(162, 162, 162);
 border-radius: 17px;
-margin: 0px}</string>
+margin: 0px;
+color: rgb(0, 0, 0);}</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_21">
               <item>
@@ -1352,6 +1378,10 @@ margin: 0px}</string>
                   <width>0</width>
                   <height>0</height>
                  </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_11">
                  <property name="leftMargin">
@@ -1374,6 +1404,10 @@ margin: 0px}</string>
                      <bold>true</bold>
                     </font>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                   </property>
                    <property name="text">
                     <string>Preis</string>
                    </property>
@@ -1388,6 +1422,10 @@ margin: 0px}</string>
                  <font>
                   <pointsize>12</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="text">
                  <string>Preise inkl. MwSt. zzg. Versandkosten</string>
@@ -1410,6 +1448,10 @@ margin: 0px}</string>
                     <bold>true</bold>
                    </font>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                  </property>
                   <property name="text">
                    <string>Inhalt:</string>
                   </property>
@@ -1422,6 +1464,10 @@ margin: 0px}</string>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
                   </property>
                   <property name="text">
                    <string>Inhalt: 0.7 Liter (57,13 €* / 1 Liter) </string>
@@ -1446,6 +1492,10 @@ margin: 0px}</string>
                     <bold>true</bold>
                    </font>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                  </property>
                   <property name="text">
                    <string>Lagerbestand:</string>
                   </property>
@@ -1457,6 +1507,10 @@ margin: 0px}</string>
                    <font>
                     <pointsize>14</pointsize>
                    </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
                   </property>
                   <property name="text">
                    <string>0 Stück</string>
@@ -1509,6 +1563,10 @@ margin: 0px}</string>
                     <bold>true</bold>
                    </font>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                  </property>
                   <property name="text">
                    <string>Hersteller:</string>
                   </property>
@@ -1520,6 +1578,10 @@ margin: 0px}</string>
                    <font>
                     <pointsize>12</pointsize>
                    </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">;
+color: rgb(0, 0, 0);</string>
                   </property>
                   <property name="text">
                    <string>TextLabel</string>
@@ -1582,6 +1644,10 @@ margin: 0px}</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                </property>
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
@@ -1604,6 +1670,10 @@ margin: 0px}</string>
                 </property>
                 <property name="focusPolicy">
                  <enum>Qt::WheelFocus</enum>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -1796,6 +1866,10 @@ margin: 0px}</string>
                 <bold>true</bold>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
+              </property>
               <property name="text">
                <string>Es tut uns Leid.</string>
               </property>
@@ -1815,6 +1889,10 @@ margin: 0px}</string>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
+              </property>
               <property name="text">
                <string>Es konnten leider keine Informationen</string>
               </property>
@@ -1830,6 +1908,10 @@ margin: 0px}</string>
                 <pointsize>17</pointsize>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
               </property>
               <property name="text">
                <string>  zu diesem Produkt gefunden werden.</string>
@@ -2049,6 +2131,10 @@ margine: 0px}</string>
                 <bold>true</bold>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
+              </property>
               <property name="text">
                <string>Hersteller:</string>
               </property>
@@ -2067,6 +2153,10 @@ margine: 0px}</string>
                 <pointsize>20</pointsize>
                 <bold>false</bold>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
               </property>
               <property name="text">
                <string>Herstellername</string>
@@ -2105,6 +2195,10 @@ margine: 0px}</string>
                 <width>100</width>
                 <height>40</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
               </property>
               <property name="text">
                <string>IMG</string>
@@ -2249,6 +2343,10 @@ margine: 0px}</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                </property>
                 <property name="text">
                  <string>Homepage:</string>
                 </property>
@@ -2260,6 +2358,10 @@ margine: 0px}</string>
                  <font>
                   <pointsize>16</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="text">
                  <string>TextLabel</string>
@@ -2326,6 +2428,10 @@ margine: 0px}</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
+                </property>
                 <property name="text">
                  <string>Beschreibung:</string>
                 </property>
@@ -2360,6 +2466,10 @@ margine: 0px}</string>
                 </property>
                 <property name="focusPolicy">
                  <enum>Qt::WheelFocus</enum>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -2630,6 +2740,10 @@ border-radius: 15px}</string>
                 <bold>true</bold>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
+              </property>
               <property name="text">
                <string>Es konnte keine Verbindung zum MS SQL Server hergestellt werden!</string>
               </property>
@@ -2646,6 +2760,10 @@ border-radius: 15px}</string>
                 <italic>false</italic>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">;
+color: rgb(0, 0, 0);</string>
               </property>
               <property name="text">
                <string>Bitte Überprüfen sie die Server Addresse und Login Daten!</string>
@@ -2769,7 +2887,8 @@ border-radius: 15px}</string>
             <string notr="true">background-color: rgb(255, 255, 255);
 padding: 15px;
 border: 2px solid rgb(162, 162, 162);
-border-radius: 15px</string>
+border-radius: 15px;
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Lade Artikeldaten...</string>
@@ -2893,7 +3012,8 @@ border-radius: 15px</string>
             <string notr="true">background-color: rgb(255, 255, 255);
 padding: 10px;
 border: 2px solid rgb(162, 162, 162);
-border-radius: 15px</string>
+border-radius: 15px;
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string> Verbinde mit Microsoft SQL DB Server... </string>

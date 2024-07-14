@@ -1,21 +1,21 @@
-import mapplication
-import mainwindow
-import webserver
-import logger
-# Für Informationsausgabe
-
 import datetime
+import logging
 import os
 import sys
 import timeit
-
-from PySide2.QtWidgets import QApplication, QWidget
-import constants as consts
-
-import logging
 from pathlib import Path
-log = logging.getLogger(Path(__file__).name)
 
+from PySide6.QtWidgets import QApplication, QWidget
+
+import constants as consts
+import logger
+import mainwindow
+import mapplication
+import webserver
+
+# Für Informationsausgabe
+
+log = logging.getLogger(Path(__file__).name)
 
 if __name__ == "__main__":
     # Change Working Directory to the one this file is in
@@ -85,7 +85,7 @@ if __name__ == "__main__":
             # Mache das Fenster sichtbar
             m_win.show()
             # Warte auf exit signal
-            ret = m_app.exec_()
+            ret = m_app.exec()
             # Beende alle SQL Verbindungen
             m_win.cleanUp()
 
@@ -125,7 +125,7 @@ if __name__ == "__main__":
             m_win.showFullScreen()
             m_win.show()
             # Start the event loop.
-            m_app.exec_()
+            m_app.exec()
         except Exception as exc:
             log.critical("\nError in BLACK-SCREEN: {0}".format(exc))
 

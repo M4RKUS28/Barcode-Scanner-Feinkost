@@ -1,16 +1,15 @@
-from PySide2 import QtCore
-import pyodbc
-import sys
+import datetime
+import logging
 import os
 import sqlite3
-import logging
-import constants as consts
-import datetime
-
-import updater
-
-
+import sys
 from pathlib import Path
+
+import pyodbc
+from PySide6 import QtCore
+
+import constants as consts
+import updater
 
 log = logging.getLogger(Path(__file__).name)
 
@@ -21,7 +20,8 @@ glob_updater = updater.Updater()
 def setup(log_file_path: str, dirPath: str):
     # Setup Logfile Path
     logging.basicConfig(filename=log_file_path, level=logging.DEBUG, format='%(asctime)s: ( Thread: %(thread)d | '
-                        'File: %(name)s ): %(levelname)s: %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+                                                                            'File: %(name)s ): %(levelname)s: %(message)s',
+                        datefmt='%d-%b-%y %H:%M:%S')
 
     # Leite ganzen stderr output in Logger um
     sys.stderr = LoggerWriter(logging.getLogger().error)

@@ -1,11 +1,10 @@
-import datetime
-import sqlite3
 import contextlib
+import datetime
+import logging
+import sqlite3
+from pathlib import Path
 
 import constants as consts
-
-import logging
-from pathlib import Path
 
 log = logging.getLogger(Path(__file__).name)
 
@@ -36,7 +35,6 @@ item_count_on_web_server_list: int = 150
 ms_sql_server_addr: () = ("home.obermui.de", 18769)
 # auto shutdown time
 auto_shutdown_time: (str, str) = ("-1", "-1")
-
 
 #   SERVER NOTIFY UI -> EDITED BY PROGRAMM!!!!
 want_reload_advertise_var: bool = False
@@ -253,9 +251,9 @@ class LocalDataBaseManager:
         ms_sql_database_mandant = self.loadLogin("MANDANT", (ms_sql_database_mandant, ""))[0]
 
         # Time settings
-        advertise_toggle_time = self.loadNumber("CHANGE_ADVERTISE",  1, advertise_toggle_time)
-        show_article_infos_time = self.loadNumber("ARTIKEL",       1, show_article_infos_time)
-        show_producer_infos_time = self.loadNumber("HERSTELLER",  1, show_producer_infos_time)
+        advertise_toggle_time = self.loadNumber("CHANGE_ADVERTISE", 1, advertise_toggle_time)
+        show_article_infos_time = self.loadNumber("ARTIKEL", 1, show_article_infos_time)
+        show_producer_infos_time = self.loadNumber("HERSTELLER", 1, show_producer_infos_time)
         show_nothing_found_time = self.loadNumber("NOTHING-FOUND", 1, show_nothing_found_time)
 
         # Else
@@ -362,6 +360,7 @@ class LocalDataBaseManager:
             sql_connection_state = new_value
             return "SUCCESS"
         return None
+
     ####
     # Getter
     ####

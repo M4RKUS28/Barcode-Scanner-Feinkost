@@ -1,23 +1,20 @@
 import calendar
-import shutil
-import random
+import logging
 import os
+import random
+import shutil
 import string
-
 import urllib.parse
-
+from datetime import datetime, timedelta
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler
-from datetime import datetime, timedelta
+from pathlib import Path
+
+from PySide6.QtWidgets import QApplication
 
 import constants as consts
 import localdatabasemanager
-
-import logging
 import logger
-from pathlib import Path
-
-from PySide2.QtWidgets import QApplication
 
 log = logging.getLogger(Path(__file__).name)
 
@@ -153,7 +150,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                     html_bytes = self.getFileText("../web/html/logout.html")
 
                 elif not self.checkForLoggedIn():
-                    html_bytes = self.getFileText("../web/html/login.html")\
+                    html_bytes = self.getFileText("../web/html/login.html") \
                         .replace("name=\"ziel-link\" value=\"/\"".encode(),
                                  ("name=\"ziel-link\" value=\"" + self.path + "\"").encode())
 
@@ -201,8 +198,9 @@ class RequestHandler(BaseHTTPRequestHandler):
                     html_bytes = self.getFileText("../web/html/login.html")
 
                 elif sub_paths[2] == "index.html":
-                    html_bytes = self.getFileText("../web/html/index.html").replace("<a id=\"login-btn\" href=\"/html/login.html\" class=\"login-button\">Anmelden</a>".encode(),
-                                                                                    "<div id=\"log-out-menu\" style=\"display: flex; align-items: center;\"> <div class=\"loged-in-img\"></div><a href=\"/html/logout.html\"  class=\"logout-btn\">Abmelden</a>	</div >".encode())
+                    html_bytes = self.getFileText("../web/html/index.html").replace(
+                        "<a id=\"login-btn\" href=\"/html/login.html\" class=\"login-button\">Anmelden</a>".encode(),
+                        "<div id=\"log-out-menu\" style=\"display: flex; align-items: center;\"> <div class=\"loged-in-img\"></div><a href=\"/html/logout.html\"  class=\"logout-btn\">Abmelden</a>	</div >".encode())
 
                 elif sub_paths[2] == "about.html":
                     html_bytes = self.getFileText("../web/html/about.html")
@@ -300,8 +298,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def getWochenStatusPage(self, group_list, name) -> bytes:
         html_bytes: bytes = self.getFileText("../web/html/statistik-template.html")
-        html_bytes = html_bytes.replace("%smalstatistikname%".encode(), "wochenstatus".encode()).\
-            replace("%BIGSTATISTIKNAME%".encode(), "Wochenstatistik".encode())\
+        html_bytes = html_bytes.replace("%smalstatistikname%".encode(), "wochenstatus".encode()). \
+            replace("%BIGSTATISTIKNAME%".encode(), "Wochenstatistik".encode()) \
             .replace("%DATA_LABEL_SET%".encode(), str("weekdaysList").encode())
 
         replace_str: str = ""
@@ -340,7 +338,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def getMonatsStatusPage(self, group_list, name) -> bytes:
         html_bytes: bytes = self.getFileText("../web/html/statistik-template.html")
-        html_bytes = html_bytes.replace("%smalstatistikname%".encode(), "monatsstatus".encode())\
+        html_bytes = html_bytes.replace("%smalstatistikname%".encode(), "monatsstatus".encode()) \
             .replace("%BIGSTATISTIKNAME%".encode(), "Monatsstatistik".encode())
 
         now = datetime.now()
@@ -386,7 +384,7 @@ class RequestHandler(BaseHTTPRequestHandler):
     def getJahresStatusPage(self, group_list, array_index) -> bytes:
         html_bytes: bytes = self.getFileText("../web/html/statistik-template.html")
         html_bytes = html_bytes.replace("%smalstatistikname%".encode(), "jahresstatus".encode()) \
-            .replace("%BIGSTATISTIKNAME%".encode(), "Jahresstatistik".encode())\
+            .replace("%BIGSTATISTIKNAME%".encode(), "Jahresstatistik".encode()) \
             .replace("%DATA_LABEL_SET%".encode(), str("monthsList").encode())
 
         replace_str: str = ""
@@ -583,8 +581,9 @@ class RequestHandler(BaseHTTPRequestHandler):
                         # Wenn nicht redirect zurück auf Login (falls wiederholtes aufrufen der login Seite)
                         # → umleitung zu letzter seite ändern ( statt zu "/" )
                         if "/html/login.html" not in urllib.parse.unquote(data[data.index("ziel-link") + 1]):
-                            html_bytes = html_bytes.replace(";url=/html/index.html\">".encode(), (";url=" + urllib.parse.unquote(
-                                data[data.index("ziel-link") + 1]) + "\">").encode())
+                            html_bytes = html_bytes.replace(";url=/html/index.html\">".encode(),
+                                                            (";url=" + urllib.parse.unquote(
+                                                                data[data.index("ziel-link") + 1]) + "\">").encode())
                         log.debug("Login: {0}: Success".format(str((id_str, datetime.now()))))
                     else:
                         log.debug("Login: Failed: Wrong Password")
@@ -833,7 +832,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         value_2: str = data[data.index("sql_server_port_value") + 1]
 
         if value_1 != "" and value_2.isdigit():
-            if value_1 == self.loc_db_mngr.getMS_SQL_ServerAddr()[0] and int(value_2) == self.loc_db_mngr.getMS_SQL_ServerAddr()[1]:
+            if value_1 == self.loc_db_mngr.getMS_SQL_ServerAddr()[0] and int(value_2) == \
+                    self.loc_db_mngr.getMS_SQL_ServerAddr()[1]:
                 status = ""
 
             else:
@@ -859,7 +859,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         if username != "" and password != "":
 
-            if username == self.loc_db_mngr.getMS_SQL_LoginData()[0] and password == self.loc_db_mngr.getMS_SQL_LoginData()[1]:
+            if username == self.loc_db_mngr.getMS_SQL_LoginData()[0] and password == \
+                    self.loc_db_mngr.getMS_SQL_LoginData()[1]:
                 status = ""
             else:
                 if self.loc_db_mngr.setMS_SQL_LoginData(username, password):
@@ -944,7 +945,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         status: str = "<font color='green'>Erfolgreich aktualisiert!</font>"
         value: [] = str(data[data.index("shutdownTime") + 1]).split("%3A")
 
-        if str(data[data.index("shutdownTime") + 1]) == "-1"\
+        if str(data[data.index("shutdownTime") + 1]) == "-1" \
                 or str(data[data.index("shutdownTime") + 1]) == "-1%3A-1":
             if self.loc_db_mngr.setAutoShutdownTime("-1", "-1"):
                 status = "<font color='green'>Automatisches Herunterfahren deaktiviert.</font>"
@@ -1017,7 +1018,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             html = html.replace("><!--%disabled_update%-->".encode(), "hidden=\"true\">".encode())
         else:
             msg = "Es ist eine neuere Version ( " + str(logger.glob_updater.getNewestVersion()) + " ) verfügbar. " \
-                                                "Derzeitige Version: " + str(logger.glob_updater.getCurrentVersion())
+                                                                                                  "Derzeitige Version: " + str(
+                logger.glob_updater.getCurrentVersion())
         if logger.glob_updater.state == logger.glob_updater.STATES.UPDATING:
             msg = "[ v" + str(logger.glob_updater.getCurrentVersion()) + " ] --> [ " + \
                   str(logger.glob_updater.getNewestVersion()) + " ]..."

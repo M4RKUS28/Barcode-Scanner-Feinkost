@@ -1,9 +1,9 @@
-from PySide2.QtCore import QEvent, Signal, Slot
-from PySide2.QtWidgets import QApplication
-
-
 import logging
 from pathlib import Path
+
+from PySide6.QtCore import QEvent, Signal, Slot
+from PySide6.QtWidgets import QApplication
+
 log = logging.getLogger(Path(__file__).name)
 
 

@@ -1,21 +1,21 @@
-from enum import Enum
-from logging import Logger
+import logging
 import os
 import sys
-from PySide2.QtCore import QFile, QTimerEvent, Qt, QIODevice, QRect
-from PySide2.QtCore import Slot, QEventLoop
-from PySide2.QtGui import QImage, QPixmap, QFontMetrics, QFont, QPalette
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QLabel, QFrame, QWidget  # , QLayout, QLayoutItem
-from PySide2.QtWidgets import QMainWindow, QApplication
-
-from databasemanager import DataBaseManager
-import localdatabasemanager
-import constants as consts
-
 from datetime import datetime
-import logging
+from enum import Enum
+from logging import Logger
 from pathlib import Path
+
+from PySide6.QtCore import QFile, QTimerEvent, Qt, QIODevice, QRect
+from PySide6.QtCore import Slot, QEventLoop
+from PySide6.QtGui import QImage, QPixmap, QFontMetrics, QFont, QPalette
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QLabel, QFrame, QWidget  # , QLayout, QLayoutItem
+from PySide6.QtWidgets import QMainWindow, QApplication
+
+import constants as consts
+import localdatabasemanager
+from databasemanager import DataBaseManager
 
 log: Logger = logging.getLogger(Path(__file__).name)
 
@@ -63,7 +63,6 @@ class MainWindow(QMainWindow):
     state = STATES.NOT_CONNECTED
 
     def __init__(self, sql_lite_path, ui_file_path, parent=None):
-        # Falls Fenster ein übergeordnetes Objekt erhält, übergib dieses der Basisklasse QMainWindow
         super(MainWindow, self).__init__(parent)
         ###
         # ### Lade Grafik aus Qt-Creator UI Datei
@@ -71,16 +70,16 @@ class MainWindow(QMainWindow):
             raise Exception("Konnte UI nicht Laden")
 
         # ### Vollbild auf letzten Screen
-        self.screenSize = QApplication.screens()[len(QApplication.screens()) - 1].availableGeometry()
+        self.screenSize = QApplication.screens()[-1].availableGeometry()
         self.setGeometry(self.screenSize)  # DEBUG
         # self.setGeometry(0, 0, 1280, 800)  # DEBUG
-        self.showFullScreen()            # RICHTIG
+        self.showFullScreen()  # RICHTIG
 
         # Hintergrund Bild skalieren
         background_img_main_w = QPixmap("../images/bg1.png")
         background_img_main_w = background_img_main_w.scaled(self.size(), Qt.IgnoreAspectRatio)
         palette = QPalette()
-        palette.setBrush(QPalette.Background, background_img_main_w)
+        palette.setBrush(QPalette.Window, background_img_main_w)
         self.setPalette(palette)
 
         # ### init Sonderpreis redLine, init Sonderpreis Label...
@@ -98,11 +97,12 @@ class MainWindow(QMainWindow):
 
         # "Kein artikel gefunden"-Grafik...
         self.window.frame.setPixmap(self.getImage("../images/no_picture_found.jpg").scaled(self.window.frame.size(),
-                                                                                           Qt.KeepAspectRatio, Qt.SmoothTransformation ))
+                                                                                           Qt.KeepAspectRatio,
+                                                                                           Qt.SmoothTransformation))
 
         # "Barcode Scanner Bild mit Handy Beispiel"-Grafik
-        max_width = (0.9 * (self.screenSize.width() / 2))
-        max_height = (0.8 * (self.screenSize.height()))
+        max_width = 0.9 * (self.screenSize.width() / 2)
+        max_height = 0.8 * (self.screenSize.height())
         self.window.img1.setPixmap(self.getImage("../images/sunmi_scan.png").
                                    scaled(max_width, max_height, Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
@@ -188,48 +188,38 @@ class MainWindow(QMainWindow):
                 return pix
             else:
                 return pix.scaled(pix.toImage().size() / scale, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        log.error("Konnte Bild nicht laden: {0}".format(path))
+        log.error(f"Konnte Bild nicht laden: {path}")
         return QPixmap()
 
     @Slot()
     def timerEvent(self, event: QTimerEvent) -> None:
-        # Leite jede Sekunde Event TIMER an EventHandler weiter
         self.event_handler("TIMER")
 
     @Slot()
     def clickMoreInfosHerstellerButton(self):
-        log.debug("Weitere Informationen zum Hersteller {0} angefragt.".format(self.window.hersteller.text()))
+        log.debug(f"Weitere Informationen zum Hersteller {self.window.hersteller.text()} angefragt.")
         self.event_handler("BUTTON_MORE_PRODUCER_INFOS_CLICKED")
-        return
 
     @Slot()
     def click_pushButton_back_from_hersteller_page(self):
         self.event_handler("BUTTON_BACK_TO_INFOS_CLICKED")
-        return
 
-    # Funktion (Slot), die mit dem Signal aus MApplication verbunden ist, und bei einem Scan aufgerufen wird
     @Slot(str)
     def new_scan(self, value):
-        # abspath = os.path.abspath(__file__)
-        # d_name = os.path.dirname(abspath)
-        # u = updater.Updater(None, d_name)
-
-        # Gib den Scan dem Event-Handler weiter...
-        log.debug("Neuen Barcode Scan erhalten: {0}".format(value))
+        log.debug(f"Neuen Barcode Scan erhalten: {value}")
         self.event_handler("NEW_SCAN", value)
 
     def loadAdvertiseList(self):
         self.advertise_kArtikel_list = self.databasemanager.getAdvertiseList(
-            consts.wawi_advertise_aktive_meta_keyword)
-        log.info("Liste mit Werbeartikel: kArtikel= {0}".format(self.advertise_kArtikel_list))
+            constants.wawi_advertise_aktive_meta_keyword)
+        log.info(f"Liste mit Werbeartikel: kArtikel= {self.advertise_kArtikel_list}")
 
         if self.advertise_kArtikel_list is None or len(self.advertise_kArtikel_list) < 2:
-            log.warning("  Not more than 1 Advertise found !")
+            log.warning("  Not more than 1 Advertise found!")
             self.advertise_kArtikel_list = None
-        return self.advertise_kArtikel_list  # return None if len() < 2
+        return self.advertise_kArtikel_list
 
     def switchArtikelPreViewPageAndStartPage(self):
-        # Wenn artikel mit Merkmal für Vorschau existieren, lade neue Anzeige und wechsle zu dieser
         try:
             if self.loc_db_mngr.checkWantReloadAdvertiseList():
                 self.loc_db_mngr.setWantReloadAdvertiseList(False)
@@ -240,76 +230,70 @@ class MainWindow(QMainWindow):
                     self.window.stackedWidget_advertise.setCurrentIndex(0)
                     return
         except Exception as e:
-            log.error("Failed to load new Advertise: {0}".format(e))
-        # wenn fehler auftritt:  zeige weiter Startseite an
+            log.error(f"Failed to load new Advertise: {e}")
         self.window.stackedWidget_advertise.setCurrentIndex(1)
 
     def new_advertise(self):
         try:
             if self.advertise_kArtikel_list is None or len(self.advertise_kArtikel_list) < 2:
-                # Advertise List is Empty
                 return
 
-            for i in range(0, 2):
-                # -try all indexes but if it is the second one don't try this one => reduce range by one at the second
-                # -> reduce 'i' == 1... use + 1 to check if error
-                for trs in range(0, len(self.advertise_kArtikel_list) + 1 - i):
+            for i in range(2):
+                for trs in range(len(self.advertise_kArtikel_list) + 1 - i):
                     if trs == len(self.advertise_kArtikel_list) - i:
-                        log.error("Error: couldn't find a ( second ) advertise, that is not invalid -> clear list")
+                        log.error("Error: couldn't find a (second) advertise, that is not invalid -> clear list")
                         self.advertise_kArtikel_list = None
-
                         return None
                     elif trs >= 1 and self.advertise_kArtikel_list[self.advertise_page_index] is not None:
-                        log.warning("    -> Entferne ungültige Werbung: {0}".
-                                    format(self.advertise_kArtikel_list[self.advertise_page_index]))
-
+                        log.warning(
+                            f"    -> Entferne ungültige Werbung: {self.advertise_kArtikel_list[self.advertise_page_index]}")
                         self.advertise_kArtikel_list[self.advertise_page_index] = None
-                        log.debug("  NEUE LISTE MIT WERBUNG:  {0}".format(self.advertise_kArtikel_list))
+                        log.debug(f"  NEUE LISTE MIT WERBUNG:  {self.advertise_kArtikel_list}")
 
-                    # Wähle neue aus...
                     self.advertise_page_index = (self.advertise_page_index + 1) % len(self.advertise_kArtikel_list)
                     if self.advertise_kArtikel_list[self.advertise_page_index] is None:
                         continue
-                    k_art: int = self.advertise_kArtikel_list[self.advertise_page_index].kArtikel
+                    k_art = self.advertise_kArtikel_list[self.advertise_page_index].kArtikel
 
                     data = self.databasemanager.getDataBykArtikel(k_art)
                     if data is None:
-                        log.error("    Failed to load data from advertise article k_artikel={0}".format(k_art))
+                        log.error(f"    Failed to load data from advertise article k_artikel={k_art}")
                         continue
 
                     descr = self.databasemanager.getArticleDescription(k_art)
                     if descr is None:
-                        log.error("    Failed to load article description from advertise article k_artikel={0}"
-                                  .format(k_art))
+                        log.error(f"    Failed to load article description from advertise article k_artikel={k_art}")
                         continue
 
-                    steuersatz: float = self.databasemanager.getSteuerSatz(data.kSteuerklasse)
+                    steuersatz = self.databasemanager.getSteuerSatz(data.kSteuerklasse)
                     if steuersatz == -1:
-                        log.error("    Failed to load steuersatz kSteuerklasse={0}".format(data.kSteuerklasse))
+                        log.error(f"    Failed to load steuersatz kSteuerklasse={data.kSteuerklasse}")
                         continue
 
                     inhalt = self.databasemanager.getMengenPreisStr(k_art)
                     if inhalt is None:
-                        log.error("    Failed to load MengenPreis from advertise article k_artikel={0}".format(k_art))
+                        log.error(f"    Failed to load MengenPreis from advertise article k_artikel={k_art}")
                         continue
 
-                    preis: float = float(data.fVKNetto) * (steuersatz + 1.0)
+                    preis = float(data.fVKNetto) * (steuersatz + 1.0)
                     s_preis = self.databasemanager.getSpecialPrice(k_article=k_art)
 
                     content = self.databasemanager.getFirstImageBykArtikel(data.kArtikel)
-                    img: QImage = QImage()
-                    if content is None or content.bBild is None or img.loadFromData(content.bBild) is False:
+                    img = QImage()
+                    if content is None or content.bBild is None or not img.loadFromData(content.bBild):
                         if content:
-                            log.error("    Failed to load Image from DB! Invalid Image! (k_artikel={0})".format(k_art))
+                            log.error(f"    Failed to load Image from DB! Invalid Image! (k_artikel={k_art})")
                         else:
-                            log.error("    Advertise has no Image!! -> Skipp  (k_artikel={0})".format(k_art))
+                            log.error(f"    Advertise has no Image!! -> Skipp  (k_artikel={k_art})")
                         continue
                     else:
                         if i == 0:
-                            pix = QPixmap.fromImage(img).scaled(self.window.VorschauBild1.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                            pix = QPixmap.fromImage(img).scaled(self.window.VorschauBild1.size(), Qt.KeepAspectRatio,
+                                                                Qt.SmoothTransformation)
                             self.window.VorschauBild1.setPixmap(pix)
                         else:
-                            pix = QPixmap.fromImage(img).scaled(self.window.vorschaubild2.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                            pix = QPixmap.fromImage(img).scaled(self.window.vorschaubild2.size(), Qt.KeepAspectRatio,
+                                                                Qt.SmoothTransformation)
                             self.window.vorschaubild2.setPixmap(pix)
 
                     if i == 0:
@@ -317,13 +301,11 @@ class MainWindow(QMainWindow):
                         self.window.Advertise_artikel_name.setText(descr.cName)
                         self.window.textEdit_previewdescription.setFont(QFont("Arial", 14))
                         self.window.textEdit_previewdescription.setAlignment(Qt.AlignCenter)
-                        self.window.inhalt_preview_1.setText("Inhalt: " + inhalt)
-
-                        self.window.preis_preview_1.setText(self.databasemanager.roundToStr(preis) + " €")
+                        self.window.inhalt_preview_1.setText(f"Inhalt: {inhalt}")
+                        self.window.preis_preview_1.setText(f"{self.databasemanager.roundToStr(preis)} €")
                         if s_preis is not None:
-                            p: float = float(s_preis.fNettoPreis) * (steuersatz + 1.0)
-                            self.window.label_s_price_1.setText("Nur " + self.databasemanager.roundToStr(p) + "€ statt")
-                            self.window.preis_preview_1.font().setStrikeOut(True)
+                            p = float(s_preis.fNettoPreis) * (steuersatz + 1.0)
+                            self.window.label_s_price_1.setText(f"Nur {self.databasemanager.roundToStr(p)}€ statt")
                             f = self.window.preis_preview_1.font()
                             f.setStrikeOut(True)
                             self.window.preis_preview_1.setFont(f)
@@ -332,33 +314,27 @@ class MainWindow(QMainWindow):
                             f = self.window.preis_preview_1.font()
                             f.setStrikeOut(False)
                             self.window.preis_preview_1.setFont(f)
-
                     else:
                         self.window.textEdit_prevdescr2.setText(descr.cKurzBeschreibung)
                         self.window.advertise2_articel_name.setText(descr.cName)
                         self.window.textEdit_prevdescr2.setFont(QFont("Arial", 14))
                         self.window.textEdit_prevdescr2.setAlignment(Qt.AlignCenter)
-                        self.window.inhalt_preview_2.setText("Inhalt: " + inhalt)
-
-                        self.window.preis_preview_2.setText(self.databasemanager.roundToStr(preis) + " €")
+                        self.window.inhalt_preview_2.setText(f"Inhalt: {inhalt}")
+                        self.window.preis_preview_2.setText(f"{self.databasemanager.roundToStr(preis)} €")
                         if s_preis is not None:
-                            p: float = float(s_preis.fNettoPreis) * (steuersatz + 1.0)
-                            self.window.label_s_price_2.setText("Nur " + self.databasemanager.roundToStr(p) + "€ statt")
+                            p = float(s_preis.fNettoPreis) * (steuersatz + 1.0)
+                            self.window.label_s_price_2.setText(f"Nur {self.databasemanager.roundToStr(p)}€ statt")
                             f = self.window.preis_preview_2.font()
                             f.setStrikeOut(True)
                             self.window.preis_preview_2.setFont(f)
-
                         else:
                             self.window.label_s_price_2.setText("")
                             f = self.window.preis_preview_2.font()
                             f.setStrikeOut(False)
                             self.window.preis_preview_2.setFont(f)
-                    # skip try find 1 fitting img:
-                    # print("    -> use: [", k_art, "]")
-                    # log.debug("    -> use: [", k_art, "]" {0}".format( {0}".format()))
                     break
         except Exception as e:
-            log.error("new_advertise failed: {0}".format(e))
+            log.error(f"new_advertise failed: {e}")
             return None
         return "OK"
 
@@ -425,7 +401,8 @@ class MainWindow(QMainWindow):
 
         if data is None:
             # Wenn keine Informationen zu dem Artikel gefunden werden kann, welche zu "nichts-gefunden"-Seite
-            log.warning("    Es konnten keine Informationen zu dem Artikel gefunden werden: EAN: {0}".format(scan_article_ean))
+            log.warning(
+                "    Es konnten keine Informationen zu dem Artikel gefunden werden: EAN: {0}".format(scan_article_ean))
             return self.event_handler("LOAD_ARTICLE_FAILED", scan_article_ean)
         else:
             k_artikel = data.kArtikel
@@ -611,7 +588,8 @@ class MainWindow(QMainWindow):
                                         usr=self.loc_db_mngr.getMS_SQL_LoginData()[0],
                                         db=self.loc_db_mngr.getMS_SQL_Mandant()) is None:
             log.error("Konnte Verbindung mit dem MS SQL Server nicht herstellen")
-            self.loc_db_mngr.setMSSQLConnectionState("<font color='red'>Konnte Verbindung mit dem MS SQL Server nicht herstellen!</font>")
+            self.loc_db_mngr.setMSSQLConnectionState(
+                "<font color='red'>Konnte Verbindung mit dem MS SQL Server nicht herstellen!</font>")
             self.state = self.STATES.NOT_CONNECTED
             self.window.stackedWidget.setCurrentIndex(4)
         else:
@@ -777,5 +755,3 @@ class MainWindow(QMainWindow):
                                                                              exc_tb.tb_frame.f_code.co_filename)[1],
                                                                          exc_tb.tb_lineno))
         return
-
-

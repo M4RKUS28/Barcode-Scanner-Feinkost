@@ -1,12 +1,14 @@
-from PySide2.QtCore import QThread
-from enum import Enum
-import constants
+import logging
 import subprocess
 import timeit
-import logging
-
+from enum import Enum
 # später mit success check and restore old version erweiterbar
 from pathlib import Path
+
+from PySide6.QtCore import QThread
+
+import constants
+
 log = logging.getLogger(Path(__file__).name)
 
 
@@ -70,7 +72,8 @@ class Updater(QThread):
         # else return old
         if timeit.default_timer() - self.last_check > 300:
             self.last_check = timeit.default_timer()
-            ret_v, rets = self.exec_git(["-c", "versionsort.suffix=-", "ls-remote", "--tags", "--sort=-v:refname", "origin"])
+            ret_v, rets = self.exec_git(
+                ["-c", "versionsort.suffix=-", "ls-remote", "--tags", "--sort=-v:refname", "origin"])
             if ret_v == 0:
                 tags: [] = str(rets).split("\n")
                 for ver in tags:
