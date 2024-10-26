@@ -9,19 +9,18 @@ Mit diesem Programm sollen Kunden des Innkaufhauses durch das Scannen eines Barc
 ![Vorschau1](https://github.com/M4RKUS28/Barcode-Scanner-Feinkost/blob/main/doc/Screenshots/screenshot-test-advertice.PNG)
 
 
+https://raw.githubusercontent.com/M4RKUS28/Barcode-Scanner-Feinkost/refs/heads/main/installer/install.sh
 
 # Installation mit Installer
-# [INSTALLER DOWNLOAD](https://github.com/M4RKUS28/FeinkostBarcodeScannerInstaller)
-https://github.com/M4RKUS28/FeinkostBarcodeScannerInstaller
 
 Installation durch:
 ````commandline
-wget -O /tmp/fkbc_install.sh https://raw.githubusercontent.com/M4RKUS28/FeinkostBarcodeScannerInstaller/main/install.sh; sudo chmod +x /tmp/fkbc_install.sh; sudo /tmp/fkbc_install.sh
+wget -O /tmp/fkbc_install.sh https://raw.githubusercontent.com/M4RKUS28/Barcode-Scanner-Feinkost/refs/heads/main/installer/install.sh; sudo chmod +x /tmp/fkbc_install.sh; sudo /tmp/fkbc_install.sh
 ````
 
 Deinstallation mit:
 ````commandline
-wget -O /tmp/fkbc_uninstall.sh https://raw.githubusercontent.com/M4RKUS28/FeinkostBarcodeScannerInstaller/main/uninstall.sh; sudo chmod +x /tmp/fkbc_uninstall.sh; sudo /tmp/fkbc_uninstall.sh
+wget -O /tmp/fkbc_uninstall.sh https://raw.githubusercontent.com/M4RKUS28/Barcode-Scanner-Feinkost/refs/heads/main/installer/uninstall.sh; sudo chmod +x /tmp/fkbc_uninstall.sh; sudo /tmp/fkbc_uninstall.sh
 ````
 
 # Manuelle Installation
